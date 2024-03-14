@@ -1,0 +1,39 @@
+@mixin tablet {
+  @media (max-width: 700px) {
+    @content;
+  }
+}
+@mixin moblie {
+    @media (max-width: 375px) {
+      @content;
+    }
+  }
+
+
+.button {
+  color: rgb(0, 0, 0);
+  padding: 0.5rem 1rem;
+  background-color: aliceblue;
+  border: 1px solid black;
+  border-radius: 8px;
+  margin-top: 12px;
+
+  &:hover {
+    transform: scale(0.9);
+  }
+  &-red {
+    background-color: rgb(175, 27, 27);
+  }
+  
+  @include tablet {
+    max-width: 300px;
+    background-color: rgb(0, 0, 0);
+    color: aqua;
+  }
+
+  @include moblie {
+    max-width: 200px;
+    background-color: rgb(91, 177, 211);
+    color: rgb(0, 0, 0);
+  }
+}
