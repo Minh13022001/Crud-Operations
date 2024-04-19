@@ -1,5 +1,4 @@
-import './components/Button/index.scss'
-import './components/Footer/index.scss'
+
 import useRouteElements from "./useRouteElement";
 
 

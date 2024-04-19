@@ -1,6 +1,8 @@
 import { useRoutes } from "react-router-dom";
 import MainLayout from "./Layout/MainLayout";
-import MovieList from "./pages/MovieList/MovieList";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Student from "./pages/Student";
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
@@ -8,10 +10,24 @@ export default function useRouteElements() {
       path: "/",
       element: (
         <MainLayout>
-          <MovieList />
+          <Home/>
         </MainLayout>
       ),
     },
+    {
+      path: "/login",
+      element: (
+        <Login/>
+      ),
+    },
+    {
+      path: "/students",
+      element: (
+        <MainLayout>
+          <Student/>
+        </MainLayout>
+      ),
+    }
   ]);
   return routeElements;
 }

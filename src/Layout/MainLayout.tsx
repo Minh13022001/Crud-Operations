@@ -1,19 +1,23 @@
-import React from 'react'
-import Header from '../components/Header/Header'
-import Footer from '../components/Footer/Footer'
+import React from "react";
+import Header from "../components/Header/Header";
+import Sidebar from "../components/Sidebar/Sidebar";
+import './index.scss'
 
 interface Props {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 
-const MainLayout = ({children} : Props) => {
+const MainLayout = ({ children }: Props) => {
   return (
-    <div>
-        <Header/>
+    <div className="main-layout">
+      <Sidebar />
+      <div>
+        <Header />
         {children}
-        <Footer/>
+        
+      </div>
     </div>
-  )
+  );
 }
 
-export default MainLayout
+export default MainLayout;

@@ -1,0 +1,135 @@
+.sidebar {
+  height: 100%;
+  // background-color: #F2EAE1;
+  background-color: rgb(11, 120, 82)
+  ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    margin: 0;
+    margin-top: 18px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.38px;
+    display: inline-block;
+    padding-left: 8.5px;
+    border-left: 4px solid #f8d442;
+  }
+
+  .user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 54px;
+
+    .img {
+      width: 128px;
+      height: 128px;
+      display: flex;
+      justify-content: center;
+      border-radius: 50%;
+      overflow: hidden;
+      img {
+        width: 100%; /* Make the image fill the container horizontally */
+        height: 126%; /* Set the height to 2/3 of the container height */
+        object-fit: cover; /* Scale the image while preserving its aspect ratio */
+      }
+    }
+    h2 {
+      margin: 0;
+      margin-top: 20px;
+      font-family: "Montserrat", sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 20.72px;
+    }
+    p {
+      color: #feaf00;
+      font-family: "Montserrat", sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 17.07px;
+      margin: 0;
+      margin-top: 10px;
+    }
+    .menu {
+      margin-top: 60px;
+      padding: 0;
+      width: 193px;
+      text-align: center;
+
+      ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+
+        li {
+          font-family: "Montserrat", sans-serif;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 17.07px;
+          padding: 10px;
+          margin-top: 5px;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          a{
+            text-decoration: none;
+            display: flex;
+            max-height: 24px;
+          }
+          p{
+            color: black;
+            margin: 0;
+            padding: 0;
+            margin-left: 20px;
+          }
+          svg{
+            margin-left: 20px;
+          }
+        
+
+        }
+        li:nth-child(2) {
+          p{
+            color: black;
+            margin: 0;
+            padding: 0;
+            margin-left: 25px;
+          }
+          svg{
+            margin-left: 23px;
+          }
+        }
+        
+        /* Select the third child */
+        li:nth-child(3) {
+          p{
+            color: black;
+            margin: 0;
+            padding: 0;
+            margin-left: 20px;
+          }
+          svg{
+            margin-left: 20px;
+          }        }
+      }
+      .logout{
+        margin-top: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p{
+          margin: 0;
+          padding-right: 22px;
+          color: black;
+        }
+      }
+    }
+  }
+}

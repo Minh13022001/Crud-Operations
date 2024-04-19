@@ -1,0 +1,28 @@
+.header{
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: rgb(249, 225, 255);
+
+    .caret{
+        margin-right: auto;
+    }
+    input{
+        margin-right: 30px;
+        padding: 10px;
+        border: 1px solid #E5E5E5;
+        border-radius: 8px;
+        width: 212px;
+
+    }
+    .bell-svg{
+        margin-right: 30px;
+    }
+    .search-svg{
+        position: absolute;
+        top: 20px;
+        right: 100px;
+    }
+}
