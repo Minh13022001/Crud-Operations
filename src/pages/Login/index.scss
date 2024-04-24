@@ -42,7 +42,7 @@
       font-weight: 400;
     }
     form{
-      margin-top: 18px;
+      margin-top: 25px;
       width: 100%;
       input {
         width: 96%;
@@ -67,13 +67,14 @@
       }
       p:nth-child(1) {
         margin-top: 0;
+        margin-bottom: 5px;
         text-align: left;
       }
       .signin-email{
-        height: 120px;
+        height: 110px;
       }
       .signin-password{
-        height: 120px;
+        height: 110px;
       }
     }
 

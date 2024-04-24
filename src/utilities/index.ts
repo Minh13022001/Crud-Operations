@@ -8,6 +8,22 @@ export const convertClassName = (
   return `${className} ${className}-${modifier}`;
 };
 
-export const toThousand = (number : number) => {
-  return number.toString()+ ',000'
+export const toThousand = (number: number) => {
+  return number.toString() + ",000";
+};
+
+
+export const toDate = (dateString: string) => {
+  const dateObject = new Date(dateString);
+
+  const day = dateObject.getDate();
+  const month = dateObject.getMonth() + 1; // Months are zero-based, so add 1
+  const year = dateObject.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  return formattedDate;
+};
+
+function dateFormat(el){
+  value = el.value;       
+  el.value = value.replace(/^([\d]{4})([\d]{2})([\d]{2})$/,"$1/$2/$3");        
 }

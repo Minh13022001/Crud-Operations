@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./index.scss";
 import sort from "../../assets/sort 1.png";
 import trash from "../../assets/trash 1.png";
@@ -6,38 +6,43 @@ import pen from "../../assets/pen 1.png";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "../../components/Form/Form";
-import { Result } from "../../type/result"
-import Button from "react-bootstrap/Button"
-
+import { Result } from "../../type/result";
+import Button from "react-bootstrap/Button";
+import Pagination from "../../components/pagination/Pagination";
+import { AppContext } from "../../contexts/app.context";
+import FormEdit from "../../components/Form/FormEdit";
+import { toDate } from "../../utilities";
+import dayjs from "dayjs";
 
 const Student = () => {
   const [show, setShow] = useState<boolean>(false);
   const [isVisible, setVisible] = useState<boolean>(false);
-  const [users, setUser] = useState<Result[]>([]);
+  const { setIsAuthenticated, isAuthenticated, setProfile, users, setUser } = useContext(AppContext);
+
+
   const [deleteIndex, setDeleteIndex] = useState(0); // State variable to store the index
 
+  const [editUser, setEditUser] = useState<Result>();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
 
   const handleCloseDeleteConfirm = () => {
-
     setShowDeleteConfirm(false);
-    console.log(deleteIndex, 'delete this user')
-  
-  }
+    console.log(deleteIndex, "delete this user");
+  };
 
   const confirmDelete = () => {
     setShowDeleteConfirm(false);
-    handleDelete(deleteIndex)
-    console.log('this gotta be deleted')
-  }
-
-  const handleShowDeleteConfirm = (index: number) => {
-    setShowDeleteConfirm(true) 
-    setDeleteIndex(index)
+    handleDelete(deleteIndex);
+    console.log("this gotta be deleted");
   };
 
-
+  const handleShowDeleteConfirm = (index: number) => {
+    setShowDeleteConfirm(true);
+    setDeleteIndex(index);
+  };
 
   const fetchUsers = () => {
     fetch("https://66179268ed6b8fa434830f0b.mockapi.io/api/students", {
@@ -62,7 +67,7 @@ const Student = () => {
     fetchUsers();
   }, []);
 
-  console.log(users, "this is the user you looking4");
+  // console.log(users, "this is the user you looking 4");
 
   const deleteUser = (id: number) => {
     fetch(`https://66179268ed6b8fa434830f0b.mockapi.io/api/students/${id}`, {
@@ -83,7 +88,7 @@ const Student = () => {
   };
 
   const handleDelete = (index: number) => {
-    const userId = users[index].id;
+    const userId = currentPosts[index].id;
     deleteUser(Number(userId));
   };
 
@@ -94,18 +99,23 @@ const Student = () => {
   };
 
   const closeEditModal = () => setVisible(false);
-  const openEditModal = () => {
+  const openEditModal = (index: number) => {
     setVisible(true);
+    const userId =  currentPosts[index];
+    setEditUser(userId)
     console.log("opening edit modal");
   };
 
   // Now you have a JSON object ready to be sent to the API
 
-  console.log("submitted");
+  // console.log("submitted");
 
   // console.log(phone, 8900);
 
   // console.log(isValid, 666);
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = (users as Result[]).slice(firstPostIndex, lastPostIndex);
 
   return (
     <div className="student">
@@ -138,7 +148,7 @@ const Student = () => {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form handleClick={closeEditModal} refetch={fetchUsers}/>
+          <FormEdit handleClick={closeEditModal} refetch={fetchUsers} info={editUser}/>
         </Modal.Body>
       </Modal>
 
@@ -152,13 +162,13 @@ const Student = () => {
             Close
           </Button>
           <Button variant="primary" onClick={confirmDelete}>
-            I'm sure
+            Yes!
           </Button>
         </Modal.Footer>
       </Modal>
 
-      {users.length > 0 &&
-        users.map((user, index) => (
+      {currentPosts.length > 0 &&
+        currentPosts.map((user, index) => (
           <div className="student-info" key={user.id}>
             <div className="img-info">
               <img src={user.avatar} />
@@ -169,10 +179,14 @@ const Student = () => {
             <div>{user.phone}</div>
 
             <div>{user.enroll}</div>
-            <div>{user.createdAt}</div>
-            <img src={pen} alt="edit" onClick={openEditModal} />
+            <div>{dayjs(user.birthDay).format('DD/MM/YYYY')}</div>
+            <img src={pen} alt="edit" onClick={() => openEditModal(index)} />
 
-            <img src={trash} alt="delete" onClick={() => handleShowDeleteConfirm(index)} />
+            <img
+              src={trash}
+              alt="delete"
+              onClick={() => handleShowDeleteConfirm(index)}
+            />
           </div>
         ))}
 
@@ -187,10 +201,16 @@ const Student = () => {
 
         <div>1234567305477760</div>
         <div>08-Dec, 2021</div>
-        <img src={pen} alt="edit" />
+        <img src={pen} alt="edit"  />
 
         <img src={trash} alt="delete" />
       </div>
+      <Pagination
+        totalPosts={(users as Result[]).length}
+        postsPerPage={postsPerPage}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
     </div>
   );
 };
