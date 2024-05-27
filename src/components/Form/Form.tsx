@@ -14,6 +14,7 @@ const Form: React.FC<FormProps> = ({ handleClick, isAdd, refetch }) => {
   const { setIsAuthenticated, users, setProfile, profile, setUser } =
     useContext(AppContext);
 
+    const [isOpen, setIsOpen] = useState(false)
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -46,15 +47,15 @@ const Form: React.FC<FormProps> = ({ handleClick, isAdd, refetch }) => {
           if (res.ok) {
             resolve();
           } else {
-            reject(new Error("Failed to add user"));
+            reject(new Error("Failed to add user"))
           }
         })
         .catch((error) => {
           reject(error);
-        });
-    });
+        })
+    })
   };
-
+console.log(isOpen, 'is this now opening')
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -107,6 +108,7 @@ const Form: React.FC<FormProps> = ({ handleClick, isAdd, refetch }) => {
       const removeChar = value.replace(/[^0-9]/g, "");
       const removed = Number(removeChar);
       setPhone(removed);
+      setIsOpen(true)
       if (removeChar.length > 6 && removeChar.length < 30) {
         setIsValid({ ...isValid, [name]: true });
       }
@@ -132,7 +134,7 @@ const Form: React.FC<FormProps> = ({ handleClick, isAdd, refetch }) => {
     } else if (name === "avatar") {
       setImg(value);
     }
-  };
+  }
   return (
     <form onSubmit={handleSubmit}>
       <div className="field avatar">
@@ -144,7 +146,7 @@ const Form: React.FC<FormProps> = ({ handleClick, isAdd, refetch }) => {
           placeholder=" Your avatar"
           onChange={(e) => ValidateChange(e)}
         />
-        <img src={img} alt="image preview" height="20px" width="20px" />
+        <img src={img ? img : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-XIIvNkSWY_VJflLEcy2TjTAA2JlsCJaoivmN1tC5qg&s"} alt="image preview" height="40px" width="40px" />
       </div>
       <div className="field name">
         <label htmlFor="fullname">Full Name</label>
@@ -259,3 +261,4 @@ export default Form;
 
 
 // can truyen ca object chu k chi id
+

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import "./index.scss";
 import sort from "../../assets/sort 1.png";
 import trash from "../../assets/trash 1.png";
@@ -17,7 +17,7 @@ import dayjs from "dayjs";
 const Student = () => {
   const [show, setShow] = useState<boolean>(false);
   const [isVisible, setVisible] = useState<boolean>(false);
-  const { setIsAuthenticated, isAuthenticated, setProfile, users, setUser } = useContext(AppContext);
+  const { setIsAuthenticated, isAuthenticated, users, setUser } = useContext(AppContext);
 
 
   const [deleteIndex, setDeleteIndex] = useState(0); // State variable to store the index
@@ -43,9 +43,14 @@ const Student = () => {
     setShowDeleteConfirm(true);
     setDeleteIndex(index);
   };
+  const url = new URL(
+    "https://66179268ed6b8fa434830f0b.mockapi.io/api/students"
+  );
+  url.searchParams.append("sortby", "createdAt");
+  url.searchParams.append("order", "desc");
 
   const fetchUsers = () => {
-    fetch("https://66179268ed6b8fa434830f0b.mockapi.io/api/students", {
+    fetch(url, {
       method: "GET",
       headers: { "content-type": "application/json" },
     })
@@ -85,7 +90,7 @@ const Student = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }
 
   const handleDelete = (index: number) => {
     const userId = currentPosts[index].id;
@@ -115,8 +120,14 @@ const Student = () => {
   // console.log(isValid, 666);
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = (users as Result[]).slice(firstPostIndex, lastPostIndex);
+  // const currentPosts = (users as Result[]).slice(firstPostIndex, lastPostIndex)
 
+  const currentPosts = useMemo(() => {
+    return (users as Result[]).slice(firstPostIndex, lastPostIndex)
+  }, [users, lastPostIndex, firstPostIndex])
+
+
+console.log(currentPosts, 'this is current postt')
   return (
     <div className="student">
       <div className="student-list">
@@ -124,11 +135,10 @@ const Student = () => {
         <img src={sort} alt="rtg" height="22px" width="14px" />
         <button onClick={handleShow}>ADD NEW STUDENT</button>
       </div>
+
       <div className="list">
         <p>Name</p>
-
         <p>Email</p>
-
         <p>Phone</p>
         <p>Enroll Number</p>
 
@@ -179,7 +189,7 @@ const Student = () => {
             <div>{user.phone}</div>
 
             <div>{user.enroll}</div>
-            <div>{dayjs(user.birthDay).format('DD/MM/YYYY')}</div>
+            <div>{toDate(user.birthDay)}</div>
             <img src={pen} alt="edit" onClick={() => openEditModal(index)} />
 
             <img
@@ -190,21 +200,7 @@ const Student = () => {
           </div>
         ))}
 
-      <div className="student-info">
-        <div className="img-info">
-          <img src="https://s3-alpha-sig.figma.com/img/7f02/c446/9c5672219055d43b0ffb2caf907f4b0d?Expires=1713744000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ZKrksQixb~VVqMV~RRLMBR2V8fQjkmSmqUIMMGBgNls14Nk6N-qbkyobnWYhl~bwYS8~mnjriaJ813EMKb9N5wBpou7ck4lb-RJAwg5xd2BjZR-ppWqiQMv-mchvEMSElXbI4wa67s8MjARPJUQ3t~mz51gPl9-u9oyR5g6BA6TupWIsAPfPzwJrwt0PN4tyLArMiKoj6G31Kh4s0mMCb0yRKblsFnibUxi472-0PbwJPlacAoNaj6abNCj2YQyy9oLp4w3dP37MgMUoLRVQv7Z2Io3Mz3YIYjK9BA06gtYdOmi1GBAlzK2Frf8CPsxM0GSEu6Zzrt1zlfoYzI1SCw__" />
-        </div>
-        <div>Karthi</div>
-        <div>karthi@gmmail.com</div>
-
-        <div>7305477760</div>
-
-        <div>1234567305477760</div>
-        <div>08-Dec, 2021</div>
-        <img src={pen} alt="edit"  />
-
-        <img src={trash} alt="delete" />
-      </div>
+  
       <Pagination
         totalPosts={(users as Result[]).length}
         postsPerPage={postsPerPage}
@@ -212,8 +208,8 @@ const Student = () => {
         currentPage={currentPage}
       />
     </div>
-  );
-};
+  )
+}
 
 export default Student;
 

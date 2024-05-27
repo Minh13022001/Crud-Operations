@@ -8,7 +8,7 @@ const Sidebar = () => {
   const isHome = location.pathname === "/";
   const isStudent = location.pathname === "/students";
   const navigate = useNavigate()
-  const { setIsAuthenticated, isAuthenticated, setProfile, profile } = useContext(AppContext);
+  const { setIsAuthenticated, isAuthenticated, setProfile, profile } = useContext(AppContext)
 
 
     const logout = () => {
@@ -159,7 +159,7 @@ const Sidebar = () => {
           </ul>
           <div className="logout">
             <button onClick={logout}>
-              Logout
+              Logout  
               <svg
                 width="17"
                 height="17"

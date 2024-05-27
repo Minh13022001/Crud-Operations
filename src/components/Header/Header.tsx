@@ -5,7 +5,7 @@ import { AppContext } from "../../contexts/app.context";
 
 const Header = () => {
 
-  const { setIsAuthenticated, isAuthenticated, setProfile, users, setUser } = useContext(AppContext);
+  const { setIsAuthenticated, isAuthenticated, users, setUser } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -15,10 +15,10 @@ const Header = () => {
         userInfo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         userInfo.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         userInfo.phone.toString().includes(searchTerm)
-    );
+    )
 console.log(filteredUsers, 'this is filtered')
     setUser(filteredUsers)
-  };
+  }
 
 
   const fetchUsers = () => {
@@ -47,6 +47,8 @@ console.log(filteredUsers, 'this is filtered')
    
 
   };
+
+  console.log('header also got re-render !!!!!!!!!!!!!!!!!')
 
   return (
     <div className="header">
@@ -129,3 +131,4 @@ console.log(filteredUsers, 'this is filtered')
 };
 
 export default Header;
+

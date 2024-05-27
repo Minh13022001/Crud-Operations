@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./index.scss";
-import { Link, useNavigate } from "react-router-dom";
-import { Result } from "../../type/result";
-import { setProfileToLS } from "../../utils/authen";
-import { AppContext } from "../../contexts/app.context";
+import { Link, useNavigate } from "react-router-dom"
+import { Result } from "../../type/result"
+import { setProfileToLS } from "../../utils/authen"
+import { AppContext } from "../../contexts/app.context"
 const Login = () => {
-  const [users, setUser] = useState<Result[]>([]);
+  const [users, setUser] = useState<Result[]>([])
   const [formData, setFormData] = useState({ email: "", password: "" })
 
   // const [email, setEmail] = useState("");
